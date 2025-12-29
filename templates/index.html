@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monte Carlo Policy Lab</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <script src="https://cdn.plot.ly/plotly-2.30.0.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Monte Carlo Policy Lab</h1>
+      <p>Run the fair-value sigma pipeline, then analyze policy performance and tail risk.</p>
+    </div>
+  </header>
+
+  <section class="controls">
+    <div class="panel">
+      <h2>Run pipeline</h2>
+      <label>
+        Script path
+        <input id="script-path" type="text" value="{{ default_script }}" />
+      </label>
+      <label>
+        Root data directory
+        <input id="root-dir" type="text" value="{{ default_data_dir }}" />
+      </label>
+      <button id="run-script">Run script</button>
+      <pre id="run-output" class="log"></pre>
+    </div>
+
+    <div class="panel">
+      <h2>Analyze outputs</h2>
+      <label>
+        Data directory
+        <input id="data-dir" type="text" value="{{ default_data_dir }}" />
+      </label>
+      <label>
+        Output directory
+        <input id="output-dir" type="text" placeholder="/path/to/analysis_outputs" />
+      </label>
+      <div class="grid two">
+        <label>
+          Bootstrap sims
+          <input id="sims" type="number" min="100" value="2000" />
+        </label>
+        <label>
+          Tail days
+          <input id="tail-days" type="number" min="1" value="10" />
+        </label>
+        <label>
+          Prop min total PnL
+          <input id="min-total" type="number" value="0" />
+        </label>
+        <label>
+          Prop max drawdown
+          <input id="max-dd" type="number" value="-2000" />
+        </label>
+      </div>
+      <button id="run-analysis">Analyze</button>
+      <div id="download-links" class="download"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>LLM-ready summary</h2>
+    <p>Copy-friendly format for fast edits with an LLM.</p>
+    <div class="copy-row">
+      <textarea id="llm-summary" rows="6"></textarea>
+      <button id="copy-summary">Copy</button>
+    </div>
+  </section>
+
+  <section id="results" class="results"></section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
